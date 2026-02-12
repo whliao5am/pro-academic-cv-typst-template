@@ -1,26 +1,19 @@
 #import "@preview/cuti:0.4.0": fakesc
 
-#let cv_section_label_notes = none
-#let cv_section_label_note(label) = {
-  if cv_section_label_notes == none { none }
-  else { cv_section_label_notes.at(label, default: none) }
-}
-#let cv_section_note_pattern = regex("^\\s*(.+?)\\s*\\(\\s*note\\s*:\\s*(.+?)\\s*\\)\\s*$")
 #let cv_section_parse_heading(text) = {
-  if cv_section_note_pattern == none {
+  let m = text.match(regex("^\\s*(.+?)\\s*\\(\\s*note\\s*:\\s*(.+?)\\s*\\)\\s*$"))
+  if m == none {
     (title: text, note: none)
   } else {
-    let m = text.match(cv_section_note_pattern)
-    if m == none {
-      (title: text, note: none)
-    } else {
-      let caps = m.captures
-      let title = caps.at(caps.len() - 2, default: text)
-      let note = caps.at(caps.len() - 1, default: none)
-      (title: title, note: note)
-    }
+    let caps = m.captures
+    let title = caps.at(caps.len() - 2, default: text)
+    let note = caps.at(caps.len() - 1, default: none)
+    (title: title, note: note)
   }
 }
+
+// Two-column row: left-aligned content + right-aligned content
+#let row2col(left, rhs) = [#left #h(1fr) #rhs]
 
 #let resume(
   margin: (left: 1.4cm, right: 1.2cm, top: 0.8cm, bottom: 1cm),
@@ -32,7 +25,22 @@
   ),
   par-settings: (
     leading: 0.5em,
-    spacing: 0pt,
+    spacing: 0.5em,
+  ),
+  list-settings: (
+    bullet-list-spacing: 0.7em,
+    numbered-list-spacing: 0.6em,
+  ),
+  heading-settings: (
+    above-spacing: 1.2em,
+    below-spacing: 0.6em,
+    section-title-size: 1.3em,
+    section-title-weight: "semibold",
+    section-note-size: 0.8em,
+    section-note-weight: "light",
+    section-line-above-spacing: -0.85em,
+    line-length: 100%,
+    line-stroke: 0.04em + black,
   ),
   author-info: (
     name: "John Doe",
@@ -62,12 +70,15 @@
     leading: par-settings.leading,
     spacing: par-settings.spacing,
   )
+  
+  let list_marker1 = text(size: 0.6em, baseline: 0.1em)[#sym.circle.filled]
+  set list(spacing: list-settings.bullet-list-spacing, marker: list_marker1)
+  set enum(spacing: list-settings.numbered-list-spacing)
 
-// heading.where(body.)
   // Small caps for section titles
   show heading.where(level: 2): it => [
-    #block(breakable: false, above: 16pt, below: 6pt)[
-      #show: it => fakesc[#text(tracking: 0.5pt, it)]
+    #block(breakable: false, above: heading-settings.above-spacing, below: heading-settings.below-spacing)[
+      #show: it => fakesc[#text(tracking: 0.05em, it)]
       #let content_to_string(x) = {
         if x == none { "" }
         else if type(x) == str { x }
@@ -77,19 +88,11 @@
         else { "" }
       }
       #let heading_text = content_to_string(it.body)
-      #let label_note = if it.has("label") { cv_section_label_note(it.label) } else { none }
       #let parsed = cv_section_parse_heading(heading_text)
-      #let section_note = if label_note == none { parsed.note } else { label_note }
-      #let title_text = if parsed.note == none { heading_text } else { parsed.title }
-      #let display_title = if parsed.note == none { it.body } else { [#parsed.title] }
-      #text(size: 13pt, weight: "semibold")[#display_title] #h(1fr)
-      #if section_note == none {
-        if title_text.contains("Publication") { text(size: 8pt, weight: "light")[C=Conference, J=Journal, P=Patent, S=In Submission, T=Thesis] } else { [] }
-      } else {
-        text(size: 8pt)[#section_note]
-      }
-      #v(-3mm)
-      #line(length: 100%, stroke: 0.4pt + black)
+      #let section_note = parsed.note
+      #row2col(text(size: heading-settings.section-title-size, weight: heading-settings.section-title-weight)[#parsed.title], if section_note != none { text(size: heading-settings.section-note-size, weight: heading-settings.section-note-weight)[#section_note] } else { [] })
+      #v(heading-settings.section-line-above-spacing)
+      #line(length: heading-settings.line-length, stroke: heading-settings.line-stroke)
     ]
   ]
 
@@ -104,136 +107,57 @@
   body
 }
 
-#let cv_section(title, note: none) = [
-  #pad(top: 16pt, bottom: 6pt)[
-    #show: it => fakesc[#text(tracking: 0.5pt, it)]
-    #text(size: 13pt, weight: "semibold")[#title] #h(1fr) #if note == none { [] } else { text(size: 8pt)[#note] }
-    #v(2mm)
-    #line(length: 100%, stroke: 0.4pt + black)
-  ]
-]
+// ============================================================
+// Layout Primitives
+// ============================================================
 
-#let row2col(left, rhs) = [
-  #grid(columns: (1fr, auto), gutter: 6pt)[
-    #left
-    #align(right)[#rhs]
-  ]
-]
+// Style: Single-Line Label (bold label + inline text)
+#let single_line_label(label, value) = [#text(weight: "bold")[#label] #value]
 
-#let resume_subheading(title, location, subtitle, dates) = [
-  #row2col(text(weight: "bold")[#title], text(size: 9pt, style: "italic")[#dates])
-  #row2col(text(size: 9pt, style: "italic")[#subtitle], text(size: 9pt)[#location])
-  #v(-2mm)
-]
+// Style: Single-Line Entry (bold label + inline text + right-aligned content) \
+// Use for: memberships, certifications, simple dated items
+#let single_line_entry(label, value, rcontent) = {
+  [#single_line_label(label, value) #h(1fr) #text(size: 0.9em, style: "italic")[#rcontent]]
+}
 
-#let resume_research_exp(title, location, org, dates) = [
-  #row2col(text(weight: "bold")[#title], text(size: 9pt, style: "italic")[#dates])
-  #row2col(text(size: 9pt)[#org], text(size: 9pt)[#location])
-  #v(-2mm)
-]
-
-#let resume_project(title, role, dates, location) = [
-  #row2col(text(weight: "bold")[#title], text(size: 9pt, style: "italic")[#dates])
-  #row2col(text(size: 9pt, style: "italic")[#role], text(size: 9pt)[#location])
-  #v(-2mm)
-]
-
-#let resume_honor(title, org, date) = [
-  #row2col(text(weight: "bold")[#title], text(size: 9pt, style: "italic")[#date])
-  #row2col(text(size: 9pt, style: "italic")[#org], [])
-  #v(-1.4mm)
-]
-
-#let resume_item_list(body) = [
-  #set list(spacing: 0.4em)
-  #body
-  #v(-2mm)
-]
-
-#let pub_item(label, body) = [
-  #grid(columns: (auto, 1fr), gutter: 6pt)[
-    #text(weight: "bold")[#label]
-    #body,
-  ]
-  #v(2pt)
-]
-
-#let skill_row(label, value) = [
-  #grid(columns: (auto, 1fr), gutter: 6pt)[
-    #text(weight: "bold")[#label]
-    #value,
-  ]
-  #v(2pt)
-]
-
-#let objective_block(body) = [
-  #body
-  #v(-2mm)
-]
-
-#let experience_item(company, location, title, dates, body) = [
-  #resume_subheading(company, location, title, dates)
-  #resume_item_list[#body]
-]
-
-#let project_item(title, role, dates, url: none, body) = [
-  #let link_cell = if url == none { [] } else { link(url)[url] }
-  #resume_project(title, role, dates, link_cell)
-  #resume_item_list[#body]
-]
-
-#let leadership_item(title, org, dates, url: none, body) = [
-  #project_item(title, org, dates, url: url)[#body]
-]
-
-#let volunteer_item(title, org, dates, url: none, body) = [
-  #project_item(title, org, dates, url: url)[#body]
-]
-
-#let membership_item(org, member_id, dates, url: none) = [
-  #let member_text = if member_id == none { [] } else { member_id }
-  #let member_value = if url == none { member_text } else { link(url)[member_text] }
-  #row2col(
-    [
-      #text(weight: "bold")[#org]
-      #if member_id == none { [] } else { ", " + member_value }
-    ],
-    text(size: 9pt, style: "italic")[#dates]
-  )
-  #v(-1.4mm)
-]
-
-#let certification_item(name, date, org: none, url: none) = [
-  #row2col(
-    [
-      #if org == none {
-        text(weight: "bold")[#if url == none { name } else { link(url)[name] }]
-      } else {
-        text(weight: "bold")[#org:] + if url == none { name } else { link(url)[name] }
-      }
-    ],
-    text(size: 9pt, style: "italic")[#date]
-  )
-  #v(-1.4mm)
-]
-
-#let additional_info_block(languages, interests) = [
-  #text(weight: "bold")[Languages:] #languages \
-  #text(weight: "bold")[Interests:] #interests
-  #v(-2mm)
-]
-
-#let reference_item(name, title, org, email, phone, relationship) = [
+// Style: Stacked Info Block (multi-line block with mixed styles) \
+// Use for: references, contact cards
+#let stacked_info(name, title, org, email, phone, note) = [
   #text(weight: "bold")[#name] \
   #title \
   #org \
   Email: #email \
   Phone: #phone \
-  #text(style: "italic")[Relationship: #relationship]
+  #text(style: "italic")[#note]
 ]
 
-#let reference_list(body) = [
-  #set list(spacing: 0.6em)
-  #body
-  #v(-2mm)
+// Style: Label-Value (bold label + value in two-column grid) \
+// Use for: publications, any "Category: items" pattern
+#let label_value(label, value, spacing: 2pt) = [
+  #grid(columns: (auto, 1fr), gutter: 6pt)[
+    #text(weight: "bold")[#label]
+    #value,
+  ]
+  #v(spacing)
 ]
+
+// Style: Entry Header (two-row header) \
+// Row 1: bold title (left) + italic 9pt date (right) \ 
+// Row 2: italic 9pt subtitle (left) + 9pt location (right) \
+// Use for: education, experience, research, honors
+#let entry_header(title, date, subtitle: none, location: none, spacing: 0pt) = {
+  let header = [#text(weight: "bold")[#title] #h(1fr) #text(size: 9pt, style: "italic")[#date]]
+  if subtitle != none or location != none {
+    let sub = if subtitle != none { subtitle }
+    let loc = if location != none { location }
+    header = header + [\ #text(size: 9pt, style: "italic")[#sub] #h(1fr) #text(size: 9pt)[#loc]]
+  }
+  header + v(spacing)
+}
+
+// Style: Entry with Items (entry header + bullet list) \
+// Use for: experience, projects, awards, leadership, volunteer
+#let entry_with_items(title, date, subtitle: none, location: none, url: none, body) = {
+  let loc = if url != none { link(url)[url] } else if location != none { location } else { [] }
+  entry_header(title, date, subtitle: subtitle, location: loc) + body
+}

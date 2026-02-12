@@ -141,10 +141,54 @@
 // Layout Templates
 // ============================================================
 
-// Style: Publication Entry
-#let publication_entry(label, value) = [
-  #text(weight: "bold")[[#label]] #h(2%) #value
-]
+// Style: Publication Entry List (auto-numbered by category) \
+// entries: array of dicts with keys: \
+//   - category: str — category prefix for numbering (e.g., "C", "J", "P") \
+//   - value: content — publication text (mutually exclusive with bib-key) \
+// spacing: vertical spacing between entries \
+// number-style: "descending" (default) — first entry (most recent) gets highest number \
+//               "ascending" — first entry gets number 1 \
+// label-width: width of the label column (auto = fit widest label) \
+#let publication_entry_list(
+  entries,
+  column-gutter: 1.3em,
+  row-gutter: 0.9em,
+  number-style: "descending",
+  label-width: auto,
+) = {
+  // Count entries per category
+  let cat_counts = (:)
+  for entry in entries {
+    let cat = entry.category
+    let current = if cat in cat_counts { cat_counts.at(cat) } else { 0 }
+    cat_counts.insert(cat, current + 1)
+  }
+
+  // Build grid children with auto-generated labels
+  let children = ()
+  let cat_seen = (:)
+  for entry in entries {
+    let cat = entry.category
+    let seen = if cat in cat_seen { cat_seen.at(cat) } else { 0 }
+    cat_seen.insert(cat, seen + 1)
+
+    let num = if number-style == "descending" {
+      cat_counts.at(cat) - seen
+    } else {
+      seen + 1
+    }
+
+    children.push(text(weight: "bold")[[#cat.#str(num)]])
+    children.push(entry.value)
+  }
+
+  grid(
+    columns: (label-width, 1fr),
+    column-gutter: column-gutter,
+    row-gutter: row-gutter,
+    ..children,
+  )
+}
 
 // Style: Personal Info Block \
 // Use for: references, contact cards
@@ -171,23 +215,23 @@
   }
 ]
 
-// Style: Entry Header (two-row header) \
-// Row 1: bold title (left) + italic 9pt date (right) \ 
-// Row 2: italic 9pt subtitle (left) + 9pt location (right) \
-// Use for: education, experience, research, honors
-#let entry_header(title, date, subtitle: none, location: none, spacing: 0pt) = {
-  let header = [#text(weight: "bold")[#title] #h(1fr) #text(size: 9pt, style: "italic")[#date]]
-  if subtitle != none or location != none {
-    let sub = if subtitle != none { subtitle }
-    let loc = if location != none { location }
-    header = header + [\ #text(size: 9pt, style: "italic")[#sub] #h(1fr) #text(size: 9pt)[#loc]]
-  }
-  header + v(spacing)
-}
+// // Style: Entry Header (two-row header) \
+// // Row 1: bold title (left) + italic 9pt date (right) \ 
+// // Row 2: italic 9pt subtitle (left) + 9pt location (right) \
+// // Use for: education, experience, research, honors
+// #let entry_header(title, date, subtitle: none, location: none, spacing: 0pt) = {
+//   let header = [#text(weight: "bold")[#title] #h(1fr) #text(size: 9pt, style: "italic")[#date]]
+//   if subtitle != none or location != none {
+//     let sub = if subtitle != none { subtitle }
+//     let loc = if location != none { location }
+//     header = header + [\ #text(size: 9pt, style: "italic")[#sub] #h(1fr) #text(size: 9pt)[#loc]]
+//   }
+//   header + v(spacing)
+// }
 
-// Style: Entry with Items (entry header + bullet list) \
-// Use for: experience, projects, awards, leadership, volunteer
-#let entry_with_items(title, date, subtitle: none, location: none, url: none, body) = {
-  let loc = if url != none { link(url)[url] } else if location != none { location } else { [] }
-  entry_header(title, date, subtitle: subtitle, location: loc) + body
-}
+// // Style: Entry with Items (entry header + bullet list) \
+// // Use for: experience, projects, awards, leadership, volunteer
+// #let entry_with_items(title, date, subtitle: none, location: none, url: none, body) = {
+//   let loc = if url != none { link(url)[url] } else if location != none { location } else { [] }
+//   entry_header(title, date, subtitle: subtitle, location: loc) + body
+// }

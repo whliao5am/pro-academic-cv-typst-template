@@ -81,15 +81,16 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
 // ]
 
 == Patents~&~Publications (note:C=Conference, J=Journal, P=Patent, S=In Submission, T=Thesis)
-#text(size: 9.5pt)[
-  #publication_entry([C.1], [Your Name, et al. (Year). #link("https://doi.org/XX.XXXX/XXXXXXX.XXXX.XXXXXXX")[*Title of Conference Paper*]. In _Name of Conference Proceedings_, pp. XX-XX. Publisher. Date, Location. DOI: XX.XXXX/XXXXXXX.XXXX.XXXXXXX])
-
-  #publication_entry([S.1], [Your Name, et al. (Year). *Title of Submitted Paper*. Manuscript submitted for publication in _Journal Name_.])
-
-  #publication_entry([P.1], [Inventor 1, Your Name, Inventor 3, et al. (Year). #link("https://patentoffice.gov/patent/XXXXXXXXX")[*Title of Patent*]. Patent Office, Patent No. XXXXXXXXX. Registration Date: Date, Grant Date: Date, Publication Date: Date.])
-
-  #publication_entry([J.1], [Author 1, Your Name, Author 3, et al. (Year). #link("https://doi.org/XX.XXXX/XXXXX.XXXX.XXXXXXX")[*Title of Journal Article*]. _Journal Name_, Vol. XX, Issue X, pp. XXX-XXX. DOI: XX.XXXX/XXXXX.XXXX.XXXXXXX])
-]
+#publication_entry_list(
+  (
+    (category: "C", value: [Your Name, et al. (Year). #link("https://doi.org/XX.XXXX/XXXXXXX.XXXX.XXXXXXX")[*Title of Conference Paper*]. In _Name of Conference Proceedings_, pp. XX-XX. Publisher. Date, Location. DOI: XX.XXXX/XXXXXXX.XXXX.XXXXXXX]),
+    (category: "C", value: [Your Name, et al. (Year). #link("https://doi.org/XX.XXXX/XXXXXXX.XXXX.XXXXXXX")[*Title of Conference Paper*]. In _Name of Conference Proceedings_, pp. XX-XX. Publisher. Date, Location. DOI: XX.XXXX/XXXXXXX.XXXX.XXXXXXX]),
+    (category: "S", value: [Your Name, et al. (Year). *Title of Submitted Paper*. Manuscript submitted for publication in _Journal Name_.]),
+    (category: "P", value: [Inventor 1, Your Name, Inventor 3, et al. (Year). #link("https://patentoffice.gov/patent/XXXXXXXXX")[*Title of Patent*]. Patent Office, Patent No. XXXXXXXXX. Registration Date: Date, Grant Date: Date, Publication Date: Date.]),
+    (category: "J", value: [Author 1, Your Name, Author 3, et al. (Year). #link("https://doi.org/XX.XXXX/XXXXX.XXXX.XXXXXXX")[*Title of Journal Article*]. _Journal Name_, Vol. XX, Issue X, pp. XXX-XXX. DOI: XX.XXXX/XXXXX.XXXX.XXXXXXX]),
+  ),
+  // number-style: "ascending",
+)
 
 == Skills
 #multi_line_list(

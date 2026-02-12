@@ -29,12 +29,12 @@
   ),
   list-settings: (
     bullet-list-spacing: 0.7em,
-    numbered-list-spacing: 0.6em,
+    numbered-list-spacing: 0.7em,
   ),
   heading-settings: (
     above-spacing: 1.2em,
     below-spacing: 0.6em,
-    section-title-size: 1.3em,
+    section-title-size: 1em,
     section-title-weight: "semibold",
     section-note-size: 0.8em,
     section-note-weight: "light",
@@ -111,34 +111,64 @@
 // Layout Primitives
 // ============================================================
 
-// Style: Single-Line Label (bold label + inline text)
-#let single_line_label(label, value) = [#text(weight: "bold")[#label] #value]
-
-// Style: Single-Line Entry (bold label + inline text + right-aligned content) \
+// Style: Single-Line Entry (label + inline text + right-aligned content) \
 // Use for: memberships, certifications, simple dated items
-#let single_line_entry(label, value, rcontent) = {
-  [#single_line_label(label, value) #h(1fr) #text(size: 0.9em, style: "italic")[#rcontent]]
+#let single_line_entry(label, value, rcontent, label-args: (:), rc-args: (:)) = {
+  let default-label-args = (weight: "bold")
+  let default-rc-args = (size: 0.9em, style: "italic")
+  let merged-label-args = default-label-args + label-args
+  let merged-rc-args = default-rc-args + rc-args
+  [#row2col([#text(..merged-label-args)[#label] #value], text(..merged-rc-args)[#rcontent])]
 }
 
-// Style: Stacked Info Block (multi-line block with mixed styles) \
-// Use for: references, contact cards
-#let stacked_info(name, title, org, email, phone, note) = [
-  #text(weight: "bold")[#name] \
-  #title \
-  #org \
-  Email: #email \
-  Phone: #phone \
-  #text(style: "italic")[#note]
+// Style: Multi-Line List
+#let multi_line_list(list-type: "list", ..lines) = {
+  if list-type == "enum" {
+    enum(..lines)
+  } else {
+    list(..lines)
+  }
+}
+
+// Style: Multi-Line Text
+#let multi_line_text(..lines) = [
+  #for line in lines.pos() {
+    line + linebreak()
+  }
 ]
 
-// Style: Label-Value (bold label + value in two-column grid) \
-// Use for: publications, any "Category: items" pattern
-#let label_value(label, value, spacing: 2pt) = [
-  #grid(columns: (auto, 1fr), gutter: 6pt)[
-    #text(weight: "bold")[#label]
-    #value,
-  ]
-  #v(spacing)
+// ============================================================
+// Layout Templates
+// ============================================================
+
+// Style: Publication Entry
+#let publication_entry(label, value) = [
+  #text(weight: "bold")[[#label]] #h(2%) #value
+]
+
+// Style: Personal Info Block \
+// Use for: references, contact cards
+#let personal_info(name, title, org, email, phone, note) = [
+  #multi_line_text(
+    text(weight: "bold")[#name],
+    if title != none {[#title]},
+    if org != none {[#org]},
+    if email != none {[Email: #email]},
+    if phone != none {[Phone: #phone]},
+    if note != none {text(style: "italic")[#note]},
+  )
+]
+
+// Style: Personal Info List \
+// Use for: references, contact cards
+#let personal_info_list(items, spacing: 1em, list-type: "enum") = [
+  #if list-type == "enum" {
+    set enum(spacing: spacing)
+    enum(..items.map(item => personal_info(item.name, item.title, item.org, item.email, item.phone, item.note)))
+  } else {
+    set list(spacing: spacing)
+    list(..items.map(item => personal_info(item.name, item.title, item.org, item.email, item.phone, item.note)))
+  }
 ]
 
 // Style: Entry Header (two-row header) \

@@ -13,7 +13,7 @@
 }
 
 // Two-column row: left-aligned content + right-aligned content
-#let row2col(left, rhs) = [#left #h(1fr) #rhs]
+#let row2col(left, rhs) = [#left #h(1fr) #rhs #h(0.5em)]
 
 #let resume(
   margin: (left: 1.4cm, right: 1.2cm, top: 0.8cm, bottom: 1cm),
@@ -34,7 +34,7 @@
   heading-settings: (
     above-spacing: 1.2em,
     below-spacing: 0.6em,
-    section-title-size: 1em,
+    section-title-size: 1.1em,
     section-title-weight: "semibold",
     section-note-size: 0.8em,
     section-note-weight: "light",
@@ -72,8 +72,11 @@
   )
   
   let list_marker1 = text(size: 0.6em, baseline: 0.1em)[#sym.circle.filled]
-  set list(spacing: list-settings.bullet-list-spacing, marker: list_marker1)
+  let list_marker2 = text(size: 1.4em, baseline: -0.15em)[#sym.compose]
+  set list(spacing: list-settings.bullet-list-spacing, marker: (list_marker1, list_marker2))
   set enum(spacing: list-settings.numbered-list-spacing)
+
+  show list.item: it => block(breakable: false, it)
 
   // Small caps for section titles
   show heading.where(level: 2): it => [
@@ -122,11 +125,11 @@
 }
 
 // Style: Multi-Line List
-#let multi_line_list(list-type: "list", ..lines) = {
+#let multi_line_list(list-type: "list", list-args: (:), enum-args: (:), ..lines) = {
   if list-type == "enum" {
-    enum(..lines)
+    enum(..enum-args, ..lines)
   } else {
-    list(..lines)
+    list(..list-args, ..lines)
   }
 }
 
@@ -137,9 +140,90 @@
   }
 ]
 
+// Style: Two-by-Two Entry Header (two-row header) \
+// Use for: education, experience, research, honors
+#let r2c2_entry_header(
+  top-left: "",
+  top-right: "",
+  bottom-left: "",
+  bottom-right: "",
+  top-left-args: (:),
+  top-right-args: (:),
+  bottom-left-args: (:),
+  bottom-right-args: (:),
+) = [
+    #let default-tl-args = (weight: "bold")
+    #let default-tr-args = (size: 0.9em, style: "italic")
+    #let default-bl-args = (size: 0.9em, style: "italic")
+    #let default-br-args = (size: 0.9em)
+    #let merged-tl-args = default-tl-args + top-left-args
+    #let merged-tr-args = default-tr-args + top-right-args
+    #let merged-bl-args = default-bl-args + bottom-left-args
+    #let merged-br-args = default-br-args + bottom-right-args
+    
+    #row2col([#text(..merged-tl-args)[#top-left]], [#text(..merged-tr-args)[#top-right]]) \ 
+    #row2col([#text(..merged-bl-args)[#bottom-left]], [#text(..merged-br-args)[#bottom-right]])
+]
+
+// Style: R2C2 Entry with list items (entry header + bullet list) \
+#let r2c2_entry(
+  entry-header-args: (:),
+  list-args: (:),
+  enum-args: (:),
+  list-items: (),
+  list-type: "list",
+) = {
+  set list(body-indent: 0.3em)
+  set enum(body-indent: 0.3em)
+
+  let default-list-args = (spacing: 0.5em)
+  let default-enum-args = (spacing: 0.5em)
+  let merged-list-args = default-list-args + list-args
+  let merged-enum-args = default-enum-args + enum-args
+
+  let entry-header = r2c2_entry_header(..entry-header-args)
+
+  if list-type == "list" {
+    list([
+      #entry-header 
+      #list(..merged-list-args, ..list-items)
+    ])
+  } else {
+    enum([
+      #entry-header 
+      #enum(..merged-enum-args, ..list-items)
+    ])
+  }
+}
+
+// Style: Personal Info Content \
+// Use for: references, contact cards
+#let personal_info(name, title, org, email, phone, note) = [
+  #multi_line_text(
+    text(weight: "bold")[#name],
+    if title != none {[#title]},
+    if org != none {[#org]},
+    if email != none {[Email: #email]},
+    if phone != none {[Phone: #phone]},
+    if note != none {text(style: "italic")[#note]},
+  )
+]
+
 // ============================================================
 // Layout Templates
 // ============================================================
+
+// Style: R2C2 Entry List \
+// Use for: experience, projects, awards, leadership, volunteer
+#let r2c2_entry_list(
+  spacing: 0.8em,
+  ..entries,
+) = {
+  stack(
+    spacing: spacing,
+    ..entries.pos().map(entry => r2c2_entry(..entry)),
+  )
+}
 
 // Style: Publication Entry List (auto-numbered by category) \
 // entries: array of dicts with keys: \
@@ -190,19 +274,6 @@
   )
 }
 
-// Style: Personal Info Block \
-// Use for: references, contact cards
-#let personal_info(name, title, org, email, phone, note) = [
-  #multi_line_text(
-    text(weight: "bold")[#name],
-    if title != none {[#title]},
-    if org != none {[#org]},
-    if email != none {[Email: #email]},
-    if phone != none {[Phone: #phone]},
-    if note != none {text(style: "italic")[#note]},
-  )
-]
-
 // Style: Personal Info List \
 // Use for: references, contact cards
 #let personal_info_list(items, spacing: 1em, list-type: "enum") = [
@@ -214,24 +285,3 @@
     list(..items.map(item => personal_info(item.name, item.title, item.org, item.email, item.phone, item.note)))
   }
 ]
-
-// // Style: Entry Header (two-row header) \
-// // Row 1: bold title (left) + italic 9pt date (right) \ 
-// // Row 2: italic 9pt subtitle (left) + 9pt location (right) \
-// // Use for: education, experience, research, honors
-// #let entry_header(title, date, subtitle: none, location: none, spacing: 0pt) = {
-//   let header = [#text(weight: "bold")[#title] #h(1fr) #text(size: 9pt, style: "italic")[#date]]
-//   if subtitle != none or location != none {
-//     let sub = if subtitle != none { subtitle }
-//     let loc = if location != none { location }
-//     header = header + [\ #text(size: 9pt, style: "italic")[#sub] #h(1fr) #text(size: 9pt)[#loc]]
-//   }
-//   header + v(spacing)
-// }
-
-// // Style: Entry with Items (entry header + bullet list) \
-// // Use for: experience, projects, awards, leadership, volunteer
-// #let entry_with_items(title, date, subtitle: none, location: none, url: none, body) = {
-//   let loc = if url != none { link(url)[url] } else if location != none { location } else { [] }
-//   entry_header(title, date, subtitle: subtitle, location: loc) + body
-// }

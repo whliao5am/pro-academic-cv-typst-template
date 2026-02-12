@@ -5,80 +5,106 @@
 == Objective
 Seeking a challenging position in \[your field\] to leverage my expertise in \[your key skills\]. Aiming to contribute to innovative projects at the intersection of \[your interests\] and practical problem-solving in fields such as \[specific areas of interest\].
 
-// == Experience
-// #entry_with_items(
-//   [Company A],
-//   [Month Year - Month Year],
-//   subtitle: [Job Title A],
-//   location: [City, Country],
-// )[
-// - Developed \[specific achievement\] achieving \[specific metric\] in \[specific area\]
-// - Implemented \[technology/method\], enhancing \[specific aspect\] by \[specific percentage\]
-// - Conducted analysis on \[specific data\], identifying \[key findings\]
-// - Presented findings at \[specific event\], receiving \[specific recognition\]
-// ]
-// #entry_with_items(
-//   [Company B],
-//   [Month Year - Month Year],
-//   subtitle: [Job Title B],
-//   location: [Remote],
-// )[
-// - Engineered a \[specific system/model\], improving \[specific metric\] by \[percentage\]
-// - Developed \[specific tool/method\], increasing \[specific aspect\] by \[percentage\]
-// - Implemented \[specific system\], reducing \[specific metric\] by \[percentage\]
-// - Conducted \[specific test/analysis\] to validate \[specific aspect\]
-// ]
+== Experience
+#r2c2_entry_list(
+  (
+    entry-header-args:(
+      top-left: [Company A],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Job Title A],
+      bottom-right: [City, Country],
+    ),
+    list-items: (
+      [Developed \[specific achievement\] achieving \[specific metric\] in \[specific area\]],
+      [Implemented \[technology/method\], enhancing \[specific aspect\] by \[specific percentage\]],
+      [Conducted analysis on \[specific data\], identifying \[key findings\]],
+      [Presented findings at \[specific event\], receiving \[specific recognition\]],
+    )
+  ),
+  (
+    entry-header-args:(
+      top-left: [Company B],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Job Title B],
+      bottom-right: [Remote],
+    ),
+    list-items: (
+      [Engineered a \[specific system/model\], improving \[specific metric\] by \[percentage\]],
+      [Developed \[specific tool/method\], increasing \[specific aspect\] by \[percentage\]],
+      [Implemented \[specific system\], reducing \[specific metric\] by \[percentage\]],
+      [Conducted \[specific test/analysis\] to validate \[specific aspect\]],
+    )
+  )
+)
 
-// == Education
-// #entry_header(
-//   [University Name],
-//   [Month Year - Month Year],
-//   subtitle: [Degree Name],
-//   location: [City, Country],
-// )
-// - GPA: X.XX/4.00
+== Education
+#r2c2_entry_list(
+  (
+    entry-header-args: (
+      top-left: [University Name],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Degree Name],
+      bottom-right: [City, Country],
+    ),
+    list-items: (
+      [GPA: X.XX/4.00],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [College Name],
+      top-right: [Month Year],
+      bottom-left: [Pre-University Education],
+      bottom-right: [City, Country],
+    ),
+    list-items: (
+      [Grade: XX.X%],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [High School Name],
+      top-right: [Month Year],
+      bottom-left: [Secondary Education],
+      bottom-right: [City, Country],
+    ),
+    list-items: (
+      [GPA: X.X/10],
+    ),
+  ),
+)
 
-
-// #entry_header(
-//   [College Name],
-//   [Month Year],
-//   subtitle: [Pre-University Education],
-//   location: [City, Country],
-// )
-// - Grade: XX.X%
-
-// #entry_header(
-//   [High School Name],
-//   [Month Year],
-//   subtitle: [Secondary Education],
-//   location: [City, Country],
-// )
-// - GPA: X.X/10
-
-// == Projects
-// #entry_with_items(
-//   [Project A: \[Brief Description\]],
-//   [Month Year - Month Year],
-//   subtitle: [Tools: \[List of tools and technologies used\]],
-//   url: "https://github.com/your-username/project-a",
-// )[
-// - Developed \[specific feature/system\] for \[specific purpose\]
-// - Implemented \[specific technology\] for \[specific goal\], achieving \[specific result\]
-// - Created \[specific component\], ensuring \[specific benefit\]
-// - Applied \[specific method\] to analyze \[specific aspect\]
-// ]
-
-// #entry_with_items(
-//   [Project B: \[Brief Description\]],
-//   [Month Year],
-//   subtitle: [Tools: \[List of tools and technologies used\]],
-//   url: "https://github.com/your-username/project-b",
-// )[
-// - Developed \[specific model/system\], achieving \[specific metric\]
-// - Implemented \[specific feature\], processing \[specific volume\] of data
-// - Created \[specific visualization\] for \[specific purpose\]
-// - Developed \[specific component\] for easy integration with \[specific system\]
-// ]
+== Projects
+#r2c2_entry_list(
+  (
+    entry-header-args: (
+      top-left: [Project A: \[Brief Description\]],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Tools: \[List of tools and technologies used\]],
+      bottom-right: [https://github.com/your-username/project-a],
+    ),
+    list-items: (
+      [Developed \[specific feature/system\] for \[specific purpose\]],
+      [Implemented \[specific technology\] for \[specific goal\], achieving \[specific result\]],
+      [Created \[specific component\], ensuring \[specific benefit\]],
+      [Applied \[specific method\] to analyze \[specific aspect\]],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [Project B: \[Brief Description\]],
+      top-right: [Month Year],
+      bottom-left: [Tools: \[List of tools and technologies used\]],
+      bottom-right: [https://github.com/your-username/project-b],
+    ),
+    list-items: (
+      [Developed \[specific model/system\], achieving \[specific metric\]],
+      [Implemented \[specific feature\], processing \[specific volume\] of data],
+      [Created \[specific visualization\] for \[specific purpose\]],
+      [Developed \[specific component\] for easy integration with \[specific system\]],
+    )
+  )
+)
 
 == Patents~&~Publications (note:C=Conference, J=Journal, P=Patent, S=In Submission, T=Thesis)
 #publication_entry_list(
@@ -106,84 +132,107 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
   single_line_entry("Research Skills:", [Skill 1, Skill 2, Skill 3, Skill 4, Skill 5, Skill 6], []),
 )
 
-// == Honors & Awards
-// #entry_with_items(
-//   [Award Name A],
-//   [Month Year],
-//   subtitle: [Awarding Institution/Organization],
-//   url: "https://award-link-a.com",
-// )[
-// - Brief description of the award and its significance
-// - Impact or recognition associated with the award
-// ]
+== Honors~&~Awards
+#r2c2_entry_list(
+  (
+    entry-header-args: (
+      top-left: [Award Name A],
+      top-right: [Month Year],
+      bottom-left: [Awarding Institution/Organization],
+      bottom-right: [https://award-link-a.com],
+    ),
+    list-items: (
+      [Brief description of the award and its significance],
+      [Impact or recognition associated with the award],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [Award Name B],
+      top-right: [Month Year],
+      bottom-left: [Awarding Institution/Organization],
+      bottom-right: [https://award-link-b.com],
+    ),
+    list-items: (
+      [Brief description of the award and its significance],
+      [Impact or recognition associated with the award],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [Competition Achievement],
+      top-right: [Month Year],
+      bottom-left: [Competition Name, Organizing Body],
+      bottom-right: [https://competition-link.com],
+    ),
+    list-items: (
+      [Specific achievement or rank in the competition],
+      [Skills or abilities demonstrated through this achievement],
+    ),
+  ),
+)
 
-// #entry_with_items(
-//   [Award Name B],
-//   [Month Year],
-//   subtitle: [Awarding Institution/Organization],
-//   url: "https://award-link-b.com",
-// )[
-// - Brief description of the award and its significance
-// - Impact or recognition associated with the award
-// ]
+== Leadership Experience
+#r2c2_entry_list(
+  (
+    entry-header-args: (
+      top-left: [Leadership Role A],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Organization/Institution Name],
+      bottom-right: [https://organization-a-link.com],
+    ),
+    list-items: (
+      [Key responsibility or achievement in this role],
+      [Quantifiable impact or improvement made during tenure],
+      [Initiative taken or project led],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [Leadership Role B],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Organization/Institution Name],
+      bottom-right: [https://organization-b-link.com],
+    ),
+    list-items: (
+      [Key responsibility or achievement in this role],
+      [Quantifiable impact or improvement made during tenure],
+      [Initiative taken or project led],
+    ),
+  ),
+)
 
-// #entry_with_items(
-//   [Competition Achievement],
-//   [Month Year],
-//   subtitle: [Competition Name, Organizing Body],
-//   url: "https://competition-link.com",
-// )[
-// - Specific achievement or rank in the competition
-// - Skills or abilities demonstrated through this achievement
-// ]
+== Volunteer Experience
+#r2c2_entry_list(
+  (
+    entry-header-args: (
+      top-left: [Volunteer Role A],
+      top-right: [Month Year - Month Year],
+      bottom-left: [Organization Name],
+      bottom-right: [https://volunteer-org-a-link.com],
+    ),
+    list-items: (
+      [Key responsibility or contribution in this role],
+      [Impact of your volunteer work],
+      [Skills developed or applied during this experience],
+    ),
+  ),
+  (
+    entry-header-args: (
+      top-left: [Volunteer Role B],
+      top-right: [Month Year - Present],
+      bottom-left: [Organization Name],
+      bottom-right: [https://volunteer-org-b-link.com],
+    ),
+    list-items: (
+      [Key responsibility or contribution in this role],
+      [Impact of your volunteer work],
+      [Skills developed or applied during this experience],
+    ),
+  ),
+)
 
-// == Leadership
-// #entry_with_items(
-//   [Leadership Role A],
-//   [Month Year - Month Year],
-//   subtitle: [Organization/Institution Name],
-//   url: "https://organization-a-link.com",
-// )[
-// - Key responsibility or achievement in this role
-// - Quantifiable impact or improvement made during tenure
-// - Initiative taken or project led
-// ]
-
-// #entry_with_items(
-//   [Leadership Role B],
-//   [Month Year - Month Year],
-//   subtitle: [Organization/Institution Name],
-//   url: "https://organization-b-link.com",
-// )[
-// - Key responsibility or achievement in this role
-// - Quantifiable impact or improvement made during tenure
-// - Initiative taken or project led
-// ]
-
-// == Volunteer
-// #entry_with_items(
-//   [Volunteer Role A],
-//   [Month Year - Month Year],
-//   subtitle: [Organization Name],
-//   url: "https://volunteer-org-a-link.com",
-// )[
-// - Key responsibility or contribution in this role
-// - Impact of your volunteer work
-// - Skills developed or applied during this experience
-// ]
-
-// #entry_with_items(
-//   [Volunteer Role B],
-//   [Month Year - Present],
-//   subtitle: [Organization Name],
-//   url: "https://volunteer-org-b-link.com",
-// )[
-// - Key responsibility or contribution in this role
-// - Impact of your volunteer work
-// - Skills developed or applied during this experience
-// ]
-
-== Memberships
+== Professional Memberships
 #multi_line_list(
   single_line_entry([Professional Organization A,], [Membership ID: XXXXXXXX], [Month Year - Present]),
   single_line_entry([Professional Organization B,], [Membership ID: XXXXXXXX], [Month Year - Present]),

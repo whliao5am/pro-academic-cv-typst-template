@@ -9,7 +9,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
 #r2c2_entry_list(
   (
     entry-header-args:(
-      top-left: [Company A],
+      top-left: [#link("https://research.google.com")[Google Research]],
       top-right: [Month Year - Month Year],
       bottom-left: [Job Title A],
       bottom-right: [City, Country],
@@ -81,7 +81,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Project A: \[Brief Description\]],
       top-right: [Month Year - Month Year],
       bottom-left: [Tools: \[List of tools and technologies used\]],
-      bottom-right: [https://github.com/your-username/project-a],
+      bottom-right: [#link("https://github.com/your-username/project-a")[\@your-username/project-a]],
     ),
     list-items: (
       [Developed \[specific feature/system\] for \[specific purpose\]],
@@ -95,7 +95,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Project B: \[Brief Description\]],
       top-right: [Month Year],
       bottom-left: [Tools: \[List of tools and technologies used\]],
-      bottom-right: [https://github.com/your-username/project-b],
+      bottom-right: [#link("https://github.com/your-username/project-b")[\@your-username/project-b]],
     ),
     list-items: (
       [Developed \[specific model/system\], achieving \[specific metric\]],
@@ -139,7 +139,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Award Name A],
       top-right: [Month Year],
       bottom-left: [Awarding Institution/Organization],
-      bottom-right: [https://award-link-a.com],
+      bottom-right: [#link("https://award-link-a.com")[#link-icon()]],
     ),
     list-items: (
       [Brief description of the award and its significance],
@@ -151,7 +151,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Award Name B],
       top-right: [Month Year],
       bottom-left: [Awarding Institution/Organization],
-      bottom-right: [https://award-link-b.com],
+      bottom-right: [#link("https://award-link-b.com")[#link-icon()]],
     ),
     list-items: (
       [Brief description of the award and its significance],
@@ -163,7 +163,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Competition Achievement],
       top-right: [Month Year],
       bottom-left: [Competition Name, Organizing Body],
-      bottom-right: [https://competition-link.com],
+      bottom-right: [#link("https://competition-link.com")[#link-icon()]],
     ),
     list-items: (
       [Specific achievement or rank in the competition],
@@ -179,7 +179,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Leadership Role A],
       top-right: [Month Year - Month Year],
       bottom-left: [Organization/Institution Name],
-      bottom-right: [https://organization-a-link.com],
+      bottom-right: [#link("https://organization-a-link.com")[#link-icon()]],
     ),
     list-items: (
       [Key responsibility or achievement in this role],
@@ -192,7 +192,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Leadership Role B],
       top-right: [Month Year - Month Year],
       bottom-left: [Organization/Institution Name],
-      bottom-right: [https://organization-b-link.com],
+      bottom-right: [#link("https://organization-b-link.com")[#link-icon()]],
     ),
     list-items: (
       [Key responsibility or achievement in this role],
@@ -209,7 +209,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Volunteer Role A],
       top-right: [Month Year - Month Year],
       bottom-left: [Organization Name],
-      bottom-right: [https://volunteer-org-a-link.com],
+      bottom-right: [#link("https://volunteer-org-a-link.com")[#link-icon()]],
     ),
     list-items: (
       [Key responsibility or contribution in this role],
@@ -222,7 +222,7 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
       top-left: [Volunteer Role B],
       top-right: [Month Year - Present],
       bottom-left: [Organization Name],
-      bottom-right: [https://volunteer-org-b-link.com],
+      bottom-right: [#link("https://volunteer-org-b-link.com")[#link-icon()]],
     ),
     list-items: (
       [Key responsibility or contribution in this role],

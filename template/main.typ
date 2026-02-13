@@ -1,6 +1,18 @@
 #import "../lib.typ": *
 
-#show: resume
+#show: resume.with(
+  author-info: (
+    name: "John Doe",
+    primary-info: [
+      +1-234-567-8900 | #link("mailto:john.doe@example.com")[john.doe\@example.com] | #link("https://www.john-doe.com/")[john-doe.com]
+    ],
+    secondary-info: [
+      #link("https://www.linkedin.com/in/john-doe-linkedin")[linkedin] | #link("https://github.com/john-doe-github")[github] | #link("https://scholar.google.com/citations?user=john-doe-google-scholar")[google-scholar] | #link("https://orcid.org/john-doe-orcid")[orcid]
+    ],
+    tertiary-info: "Your City, Your State - Your ZIP, Your Country",
+  ),
+  author-position: center
+)
 
 == Objective
 Seeking a challenging position in \[your field\] to leverage my expertise in \[your key skills\]. Aiming to contribute to innovative projects at the intersection of \[your interests\] and practical problem-solving in fields such as \[specific areas of interest\].
@@ -133,19 +145,13 @@ Seeking a challenging position in \[your field\] to leverage my expertise in \[y
 )
 
 == Honors~&~Awards
+- #r2c2_entry_header(
+  top-left: [Award Name A],
+  top-right: [Month Year],
+  bottom-left: [Awarding Institution/Organization],
+  bottom-right: [#link("https://award-link-a.com")[#link-icon()]],
+)
 #r2c2_entry_list(
-  (
-    entry-header-args: (
-      top-left: [Award Name A],
-      top-right: [Month Year],
-      bottom-left: [Awarding Institution/Organization],
-      bottom-right: [#link("https://award-link-a.com")[#link-icon()]],
-    ),
-    list-items: (
-      [Brief description of the award and its significance],
-      [Impact or recognition associated with the award],
-    ),
-  ),
   (
     entry-header-args: (
       top-left: [Award Name B],

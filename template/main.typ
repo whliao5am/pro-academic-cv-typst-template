@@ -1,4 +1,4 @@
-#import "../lib.typ": *
+#import "@preview/pro-academic-cv:0.1.0": *
 
 #show: resume.with(
   author-info: (

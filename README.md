@@ -5,13 +5,13 @@ A professional, highly configurable academic CV template built with [Typst](http
 <table>
 <tr>
   <td>
-    <img src="thumbnail.png" width="250px">
+    <img src="thumbnail.png" width="250px" alt="Preview of the first page of the Pro Academic CV Typst template">
   </td>
   <td>
-    <img src="thumbnail-1.png" width="250px">
+    <img src="thumbnail-1.png" width="250px" alt="Preview of the second page of the Pro Academic CV Typst template">
   </td>
   <td>
-    <img src="thumbnail-2.png" width="250px">
+    <img src="thumbnail-2.png" width="250px" alt="Preview of the third page of the Pro Academic CV Typst template">
   </td>
 </tr>
 <tr>

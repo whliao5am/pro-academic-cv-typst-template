@@ -1,0 +1,27 @@
+name: Typst Package Check
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  package-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6.0.2
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: Cache Cargo artifacts
+        uses: Swatinem/rust-cache@v2.9.1
+
+      - name: Install typst-package-check
+        run: cargo install --git https://github.com/typst/package-check.git typst-package-check
+
+      - name: Run typst-package-check
+        run: typst-package-check check

@@ -18,7 +18,7 @@ jobs:
           toolchain: stable
 
       - name: Cache Cargo artifacts
-        uses: Swatinem/rust-cache@v2.9.1
+        uses: Swatinem/rust-cache@v2.9.2
 
       - name: Install typst-package-check
         run: cargo install --git https://github.com/typst/package-check.git typst-package-check
